@@ -17,6 +17,19 @@ if [ -z "$DOMAIN" ];then
 fi
 
 
+# Set $DOCROOT and $PORT to defaults if no value is assigned
+
+if [ -z "$DOCROOT" ];then
+   DOCROOT='/var/www/vhosts/'
+fi
+
+if [ -z "$PORT" ];then
+   PORT=80
+fi
+
+
+
+
 if [ -f /etc/redhat-release ]; then
         echo "Redhat based system located"
         DISTRO="Redhat"
