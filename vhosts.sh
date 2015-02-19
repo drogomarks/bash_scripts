@@ -1,14 +1,16 @@
 #!/bin/bash
-#added the ability to run the script locally with arguments in the event that justcurl.com is not avaialbe.
+#added the ability to run the script locally with arguments in the event that justcurl.com is not avaialbe. 
 
 while getopts "d:r:p:" opt; do
-   case $opt in
+   case $opt in 
       d) DOMAIN=$OPTARG ;;
       r) DOCROOT=$OPTARG ;;
       p) PORT=$OPTARG ;;
    esac
 done
 
+
+# $DOMAIN cannot an empty variable
 
 if [ -z "$DOMAIN" ];then
    echo -e "\nERROR: -d <domain> is a required argument. \n"
@@ -30,28 +32,31 @@ fi
 
 
 
+
+
+#script from justcurl.com written by Lindsey Anderson
+
 if [ -f /etc/redhat-release ]; then
-        echo "Redhat based system located"
-        DISTRO="Redhat"
-        if [ -f /etc/httpd/vhost.d/$DOMAIN.conf ]; then
-                echo "Virtual Host already exists"
-                exit
-        fi
+	echo "Redhat based system located"
+	DISTRO="Redhat"
+	if [ -f /etc/httpd/vhost.d/$DOMAIN.conf ]; then
+		echo "Virtual Host already exists" 
+		exit
+	fi
 fi
 if [ -f /etc/debian_version ]; then
-        echo "Debian based System located"
-        DISTRO="Debian"
-        if [ ! -f /etc/apache2/sites-enabled/$DOMAIN ]; then
-                if [ -f /etc/apache2/sites-available/$DOMAIN ]; then
-                        echo "Virtual Host already exists"
-                fi
-        else
-                echo "Virtual Host already exists"
-                exit
-        fi
+	echo "Debian based System located"
+	DISTRO="Debian"
+	if [ ! -f /etc/apache2/sites-enabled/$DOMAIN ]; then
+		if [ -f /etc/apache2/sites-available/$DOMAIN ]; then
+			echo "Virtual Host already exists"
+		fi	
+	else
+		echo "Virtual Host already exists"
+		exit
+	fi
 fi
 
-#script from justcurl.com written by Lindsey Anderson only minor tweaks made to work with argument variables
 
 
 DATA="<VirtualHost *:$PORT>
@@ -60,22 +65,22 @@ DATA="<VirtualHost *:$PORT>
         #### This is where you put your files for that domain: $DOCROOT/$DOMAIN
         DocumentRoot $DOCROOT/$DOMAIN
 
-        #RewriteEngine On
-        #RewriteCond %{HTTP_HOST} ^$DOMAIN
-        #RewriteRule ^(.*)$ http://www.$DOMAIN$1 [R=301,L]
+	#RewriteEngine On
+	#RewriteCond %{HTTP_HOST} ^$DOMAIN
+	#RewriteRule ^(.*)$ http://www.$DOMAIN$1 [R=301,L]
 
         <Directory $DOCROOT/$DOMAIN>
                 Options -Indexes +FollowSymLinks -MultiViews
                 AllowOverride All
-                Order deny,allow
-                Allow from all
+		Order deny,allow
+		Allow from all
         </Directory>"
 if [[ "$DISTRO" == "Debian" ]]; then
-        DATA=$DATA"
+	DATA=$DATA"
         CustomLog /var/log/apache2/$DOMAIN-access.log combined
         ErrorLog /var/log/apache2/$DOMAIN-error.log"
 elif [[ "$DISTRO" == "Redhat" ]]; then
-        DATA=$DATA"
+	DATA=$DATA"
         CustomLog /var/log/httpd/$DOMAIN-access.log combined
         ErrorLog /var/log/httpd/$DOMAIN-error.log"
 fi
@@ -158,20 +163,20 @@ DATA=$DATA"
 
 
 if [[ "$DISTRO" == "Redhat" ]]; then
-        # Check for vhost directory in /etc/httpd
-        if [ ! -d /etc/httpd/vhost.d  ]; then
-                mkdir /etc/httpd/vhost.d &&
-                echo "include vhost.d/*.conf" >> /etc/httpd/conf/httpd.conf
-        fi
-        if [ -f /etc/httpd/vhost.d/$DOMAIN.conf ]; then
-                echo "This virtual host already exists on this system."
-                echo "Please remove the virtual host configuration file."
-                exit 1
-        fi
-        echo "$DATA" > /etc/httpd/vhost.d/$DOMAIN.conf &&
-        mkdir -p $DOCROOT/$DOMAIN
-        #chown apache:apache /$DOCROOT/$DOMAIN &&
-        #chmod 2775 $DOCROOT/$DOMAIN
+	# Check for vhost directory in /etc/httpd
+	if [ ! -d /etc/httpd/vhost.d  ]; then
+		mkdir /etc/httpd/vhost.d &&
+		echo "include vhost.d/*.conf" >> /etc/httpd/conf/httpd.conf
+	fi
+	if [ -f /etc/httpd/vhost.d/$DOMAIN.conf ]; then
+		echo "This virtual host already exists on this system."
+		echo "Please remove the virtual host configuration file."
+		exit 1
+	fi
+	echo "$DATA" > /etc/httpd/vhost.d/$DOMAIN.conf && 
+	mkdir -p $DOCROOT/$DOMAIN 
+	#chown apache:apache /$DOCROOT/$DOMAIN && 
+	#chmod 2775 $DOCROOT/$DOMAIN
 
 elif [[ "$DISTRO" == "Debian" ]]; then
         if [ -f /etc/apache2/sites-available/$DOMAIN ]; then
@@ -179,11 +184,11 @@ elif [[ "$DISTRO" == "Debian" ]]; then
                 echo "Please remove the virtual host configuration file."
                 exit 1
         fi
-        echo "$DATA" > /etc/apache2/sites-available/$DOMAIN &&
-        mkdir -p $DOCROOT/$DOMAIN
-        #chown www-data:www-data $DOCROOT/$DOMAIN &&
-        #chmod 2775 $DOCROOT/$DOMAIN &&
-        ln -s /etc/apache2/sites-available/$DOMAIN /etc/apache2/sites-enabled/domain.com
+	echo "$DATA" > /etc/apache2/sites-available/$DOMAIN && 
+	mkdir -p $DOCROOT/$DOMAIN 
+	#chown www-data:www-data $DOCROOT/$DOMAIN && 
+	#chmod 2775 $DOCROOT/$DOMAIN &&
+	ln -s /etc/apache2/sites-available/$DOMAIN /etc/apache2/sites-enabled/domain.com
 fi
 
 echo "********************"
