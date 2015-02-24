@@ -175,8 +175,8 @@ if [[ "$DISTRO" == "Redhat" ]]; then
 	fi
 	echo "$DATA" > /etc/httpd/vhost.d/$DOMAIN.conf && 
 	mkdir -p $DOCROOT
-	#chown apache:apache /$DOCROOT && 
-	#chmod 2775 $DOCROOT
+	 
+	
 
 elif [[ "$DISTRO" == "Debian" ]]; then
         if [ -f /etc/apache2/sites-available/$DOMAIN ]; then
@@ -186,8 +186,8 @@ elif [[ "$DISTRO" == "Debian" ]]; then
         fi
 	echo "$DATA" > /etc/apache2/sites-available/$DOMAIN && 
 	mkdir -p $DOCROOT
-	#chown www-data:www-data $DOCROOT && 
-	#chmod 2775 $DOCROOT &&
+	 
+	
 	ln -s /etc/apache2/sites-available/$DOMAIN /etc/apache2/sites-enabled/domain.com
 fi
 
