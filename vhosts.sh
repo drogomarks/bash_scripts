@@ -22,7 +22,7 @@ fi
 # Set $DOCROOT and $PORT to defaults if no value is assigned
 
 if [ -z "$DOCROOT" ];then
-   DOCROOT='/var/www/vhosts/'
+   DOCROOT='/var/www/vhosts/'$DOMAIN''
 fi
 
 if [ -z "$PORT" ];then
@@ -62,14 +62,14 @@ fi
 DATA="<VirtualHost *:$PORT>
         ServerName $DOMAIN
         ServerAlias www.$DOMAIN
-        #### This is where you put your files for that domain: $DOCROOT/$DOMAIN
-        DocumentRoot $DOCROOT/$DOMAIN
+        #### This is where you put your files for that domain: $DOCROOT
+        DocumentRoot $DOCROOT
 
 	#RewriteEngine On
 	#RewriteCond %{HTTP_HOST} ^$DOMAIN
 	#RewriteRule ^(.*)$ http://www.$DOMAIN$1 [R=301,L]
 
-        <Directory $DOCROOT/$DOMAIN>
+        <Directory $DOCROOT>
                 Options -Indexes +FollowSymLinks -MultiViews
                 AllowOverride All
 		Order deny,allow
@@ -112,8 +112,8 @@ DATA=$DATA"
 #<VirtualHost _default_:443>
 #        ServerName $DOMAIN
 #        ServerAlias www.$DOMAIN
-#        DocumentRoot $DOCROOT/$DOMAIN
-#        <Directory $DOCROOT/$DOMAIN>
+#        DocumentRoot $DOCROOT
+#        <Directory $DOCROOT>
 #                Options -Indexes +FollowSymLinks -MultiViews
 #                AllowOverride All
 #        </Directory>
@@ -174,9 +174,9 @@ if [[ "$DISTRO" == "Redhat" ]]; then
 		exit 1
 	fi
 	echo "$DATA" > /etc/httpd/vhost.d/$DOMAIN.conf && 
-	mkdir -p $DOCROOT/$DOMAIN 
-	#chown apache:apache /$DOCROOT/$DOMAIN && 
-	#chmod 2775 $DOCROOT/$DOMAIN
+	mkdir -p $DOCROOT
+	#chown apache:apache /$DOCROOT && 
+	#chmod 2775 $DOCROOT
 
 elif [[ "$DISTRO" == "Debian" ]]; then
         if [ -f /etc/apache2/sites-available/$DOMAIN ]; then
@@ -185,14 +185,14 @@ elif [[ "$DISTRO" == "Debian" ]]; then
                 exit 1
         fi
 	echo "$DATA" > /etc/apache2/sites-available/$DOMAIN && 
-	mkdir -p $DOCROOT/$DOMAIN 
-	#chown www-data:www-data $DOCROOT/$DOMAIN && 
-	#chmod 2775 $DOCROOT/$DOMAIN &&
+	mkdir -p $DOCROOT
+	#chown www-data:www-data $DOCROOT && 
+	#chmod 2775 $DOCROOT &&
 	ln -s /etc/apache2/sites-available/$DOMAIN /etc/apache2/sites-enabled/domain.com
 fi
 
 echo "********************"
 echo ">> Server Name : $DOMAIN"
 echo ">> Server Alias: www.$DOMAIN"
-echo ">> Document Root: $DOCROOT/$DOMAIN"
+echo ">> Document Root: $DOCROOT"
 echo "********************"
