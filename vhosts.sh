@@ -29,11 +29,6 @@ if [ -z "$PORT" ];then
    PORT=80
 fi
 
-
-
-
-
-
 #script from justcurl.com written by Lindsey Anderson
 
 if [ -f /etc/redhat-release ]; then
