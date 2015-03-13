@@ -35,6 +35,9 @@ if [[ "$DISTRO" == "RedHat" ]]; then
                 do
                         PORT=`cat $i | grep listen | grep -o '[80]\+'  | awk 'NR==1'`
                         DOMAIN=`cat $i | grep -m1 server_name | awk '{print $2}' | sed 's/;//g'`
+                        if [[ "$DOMAIN" == "server_name" ]]; then
+                                DOMAIN=`cat $i | grep -m1 server_name | awk '{print $3}' | sed 's/;//g'`
+                        fi
                         if [[ "$PORT" == "80" ]]; then
                                 echo -e "$DOMAIN :$PORT ($i) \f"
                         fi
@@ -46,6 +49,9 @@ if [[ "$DISTRO" == "RedHat" ]]; then
                 do
                         PORT=`cat $i | grep listen | grep -o '[443]\+'  | awk 'NR==1'`
                         DOMAIN=`cat $i | grep -m1 server_name | awk '{print $2}' | sed 's/;//g'`
+                        if [[ "$DOMAIN" == "server_name" ]]; then
+                                DOMAIN=`cat $i | grep -m1 server_name | awk '{print $3}' | sed 's/;//g'`
+                        fi
                         if [[ "$PORT" == "443" ]]; then
                         echo -e "$DOMAIN :$PORT ($i) \f"
                         fi
@@ -58,6 +64,9 @@ if [[ "$DISTRO" == "RedHat" ]]; then
                 do
                         PORT=`cat $i | grep listen | grep -o '[0-9]\+' | awk 'NR==1'`
                         DOMAIN=`cat $i | grep -m1 server_name | awk '{print $2}' | sed 's/;//g'`
+                        if [[ "$DOMAIN" == "server_name" ]]; then
+                                DOMAIN=`cat $i | grep -m1 server_name | awk '{print $3}' | sed 's/;//g'`
+                        fi
                         if [[ "$PORT" != "80" && "$PORT" != "443" ]]; then
                         echo -e "$DOMAIN :$PORT ($i) \f"
                         fi
@@ -82,6 +91,9 @@ if [[ "$DISTRO" == "Debian" ]]; then
                 do
                         PORT=`cat $i | grep listen | grep -o '[80]\+'  | awk 'NR==1'`
                         DOMAIN=`cat $i | grep -m1 server_name | awk '{print $2}' | sed 's/;//g'`
+                        if [[ "$DOMAIN" == "server_name" ]]; then
+                                DOMAIN=`cat $i | grep -m1 server_name | awk '{print $3}' | sed 's/;//g'`
+                        fi
                         if [[ "$PORT" == "80" ]]; then
                                 echo -e "$DOMAIN :$PORT ($i) \f"
                         fi
@@ -93,6 +105,9 @@ if [[ "$DISTRO" == "Debian" ]]; then
                 do
                         PORT=`cat $i | grep listen | grep -o '[443]\+'  | awk 'NR==1'`
                         DOMAIN=`cat $i | grep -m1 server_name | awk '{print $2}' | sed 's/;//g'`
+                        if [[ "$DOMAIN" == "server_name" ]]; then
+                                DOMAIN=`cat $i | grep -m1 server_name | awk '{print $3}' | sed 's/;//g'`
+                        fi
                         if [[ "$PORT" == "443" ]]; then
                         echo -e "$DOMAIN :$PORT ($i) \f"
                         fi
@@ -105,6 +120,9 @@ if [[ "$DISTRO" == "Debian" ]]; then
                 do
                         PORT=`cat $i | grep listen | grep -o '[0-9]\+' | awk 'NR==1'`
                         DOMAIN=`cat $i | grep -m1 server_name | awk '{print $2}' | sed 's/;//g'`
+                        if [[ "$DOMAIN" == "server_name" ]]; then
+                                DOMAIN=`cat $i | grep -m1 server_name | awk '{print $3}' | sed 's/;//g'`
+                        fi
                         if [[ "$PORT" != "80" && "$PORT" != "443" ]]; then
                         echo -e "$DOMAIN :$PORT ($i) \f"
                         fi
