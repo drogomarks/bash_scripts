@@ -169,7 +169,7 @@ fi
 
 ############# $CONFS2
 
-if [ -z $CONFS2 ]; then
+if [[ -z $CONFS2 ]]; then
 	exit
 else
 
