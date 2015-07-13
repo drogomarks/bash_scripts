@@ -27,8 +27,15 @@ if [[ "$DISTRO" == "RedHat" ]]; then
         echo -e "===========================================================================   "
         echo -e "Nginx Tool has found the follwing vhosts configured on the following ports:   "
         echo -e "=========================================================================== \f"
+        if [ -d /etc/nginx/vhosts.d/ ]; then
+                CONFS=$(ls /etc/nginx/vhosts.d/*.conf | sort)
+        else
+                if [ -d /etc/nginx/sites-avaiable/ ];then
+                        CONFS=$(ls /etc/nginx/sites-available/*.conf | sort)
+        else 
         CONFS=$(ls /etc/nginx/conf.d/*.conf | sort)
-
+        fi
+        
         echo -e "HTTP: "
 
         for i in  $CONFS;
