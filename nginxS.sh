@@ -222,9 +222,9 @@ else
                         fi
         done | column -t | sort -rk 2,2
 
-	fi        
+	fi
+    nginx -t
 fi
-nginx -t
 
 
 #Essentially the same thing but with Debian/Ubuntu
