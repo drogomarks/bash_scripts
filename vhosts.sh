@@ -95,14 +95,7 @@ DATA=$DATA"
 # >> SSLCertificateFile    /etc/pki/tls/certs/$DOMAIN.crt
 # >> SSLCertificateKeyFile    /etc/pki/tls/private/$DOMAIN.key
 # >> SSLCACertificateFile    /etc/pki/tls/certs/$DOMAIN.ca.crt
-#
-# After these files have been created, and ONLY AFTER, then run this and restart Apache:
-#
-# To remove these comments and use the virtual host, use the following:
-# VI   -  :39,$ s/^#//g
-# RedHat Bash -  sed -i '39,$ s/^#//g' /etc/httpd/vhost.d/$DOMAIN.conf && service httpd reload
-# Debian Bash -  sed -i '39,$ s/^#//g' /etc/apache2/sites-available/$DOMAIN && service apache2 reload
-##
+
 
 #<VirtualHost _default_:443>
 #        ServerName $DOMAIN
