@@ -65,12 +65,24 @@ if [ $DISTRO == "RedHat" ] || [ "Amazon" ]; then
 	fi
 fi
 
+#Domain?
+echo -e "Would you like to configure a domain already? (y/n)"
+read DOMAIN_ANSWER
+
+if [ $DOMAIN_ANSWER == "n" ]; then 
+   echo -e "Ok. Moving on."
+else 
+	echo -e "Domain name?:"
+	read DOMAIN
+fi
+
 
 ################### CONFIGURE APACHE ##########################
 echo -e "Configuring Apache...\n" 
 
 #Create VirtualHosts Directory & include it
-mkdir -p /var/www/vhost.d/
+mkdir -p /var/www/vhosts/
+mkdir -p /etc/httpd/vhost.d/
 echo "Include vhost.d/*.conf" >> /etc/httpd/conf/httpd.conf
 
 #Make Apache Listen on 8080
@@ -78,6 +90,12 @@ sed -i 's/80/8080/' /etc/httpd/conf/httpd.conf
 if [ -f /etc/httpd/ports.conf ]; then 
 	sed -i 's/80/8080/' /etc/httpd/ports.conf
 fi
+
+#Set up domain
+if [ $DOMAIN_ANSWER = 'y' ]; then
+	echo -e "Setting up your domain $DOMAIN in Apache...\n"
+	wget https://raw.githubusercontent.com/drogomarks/bash_scripts/master/vhosts.sh &> /dev/null && bash vhosts.sh -d $DOMAIN -p 8080
+fi 
 
 service httpd restart
 
@@ -91,8 +109,7 @@ sed -i 's/80/8081/g' /etc/sysconfig/varnish
 
 cp /etc/varnish/default.vcl /etc/varnish/default.vcl.orig
 
-wget https://raw.githubusercontent.com/drogomarks/bash_scripts/master/wordpress_default.vcl &> /dev/null && mv wordpress_default.vcl /etc/varnish/default.vcl
-
+wget https://raw.githubusercontent.com/drogomarks/bash_scripts/master/files/wordpress_default.vcl &> /dev/null && mv wordpress_default.vcl /etc/varnish/default.vcl
 service varnish restart
 echo -e "DONE!\n"
 sleep 1
@@ -102,11 +119,18 @@ sleep 1
 echo -e "Configuring Nginx...\n"
 
 cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.orig
-wget https://raw.githubusercontent.com/drogomarks/bash_scripts/master/default_nginx.conf &> /dev/null && mv default_nginx.conf /etc/nginx/nginx.conf
+
+wget https://raw.githubusercontent.com/drogomarks/bash_scripts/master/files/default_nginx.conf &> /dev/null && mv default_nginx.conf /etc/nginx/nginx.conf
 
 touch /etc/nginx/conf.d/global.deny
 
-wget https://raw.githubusercontent.com/drogomarks/bash_scripts/master/wpStack_nginx_vhost.conf &> /dev/null && mv wpStack_nginx_vhost.conf /etc/nginx/conf.d/default_template.conf
+wget https://raw.githubusercontent.com/drogomarks/bash_scripts/master/files/wpStack_nginx_vhost.conf &> /dev/null && mv wpStack_nginx_vhost.conf /etc/nginx/conf.d/default_template.conf
+
+#Set up domain 
+if [ $DOMAIN_ANSWER = 'y' ]; then
+	cp /etc/nginx/conf.d/default_template.conf /etc/nginx/conf.d/$DOMAIN.conf
+	sed -i 's/example.com/$DOMAIN/g' /etc/nginx/conf.d/$DOMAIN.conf
+fi
 
 service nginx restart 
 echo -e "DONE!\n"
