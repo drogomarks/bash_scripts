@@ -8,6 +8,13 @@ if [ -f /etc/redhat-release ]; then
         DISTRO="RedHat"
 fi
 
+if [ `cat /etc/issue | grep -i Amazon | awk {'print $1'}` == "Amazon" ]; then
+        echo "Amazon Linux (RHEL Based) system located"
+        DISTRO="Redhat"
+fi
+
+
+
 if [ -f /etc/debian_version ]; then
         echo "Debian Based System Detected."
         DISTRO="Debian"
