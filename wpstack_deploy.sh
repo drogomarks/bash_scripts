@@ -105,7 +105,7 @@ sleep 1
 ################### CONFIGURE VARNISH #########################
 echo -e "Configuring Varnish...\n"
 
-sed -i 's/80/8081/g' /etc/sysconfig/varnish
+sed -i 's/6081/8081/g' /etc/sysconfig/varnish
 
 cp /etc/varnish/default.vcl /etc/varnish/default.vcl.orig
 
