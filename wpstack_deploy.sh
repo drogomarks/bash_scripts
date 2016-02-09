@@ -58,9 +58,9 @@ fi
 #Update Packages
 if [ "$DISTRO" == "RedHat7" ]; then
 	echo -e "Checking for Epel Repo.."
-	if [ `yum repolist | grep epel` != *"epel"* ]; then
-		wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm > /tmp/
-		yum install epel-release-7.noarch.rpm
+	if [[ -z `yum repolist | grep epel` ]]; then
+		wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+		yum install epel-release-latest-7.noarch.rpm
 	else
 		echo -e "Epel Repo installed already, moving on.\n"
 		sleep .5
@@ -129,7 +129,6 @@ if [ "$DISTRO" == "RedHat7" ]; then
 	################### CONFIGURE VARNISH #########################
 	echo -e "Configuring Varnish...\n"
 
-	sed -i 's/6081/8081/g' /etc/varnish/varnish.params
 
 	cp /etc/varnish/default.vcl /etc/varnish/default.vcl.orig
 
@@ -147,10 +146,9 @@ if [ "$DISTRO" == "RedHat7" ]; then
 
 	wget https://raw.githubusercontent.com/drogomarks/bash_scripts/master/files/default_nginx.conf &> /dev/null && mv default_nginx.conf /etc/nginx/nginx.conf
 	
-	sed -i '0,/nginx/s//www-data/' /etc/nginx/nginx.conf
 	touch /etc/nginx/conf.d/global.deny
 
-	wget https://raw.githubusercontent.com/drogomarks/bash_scripts/master/files/wpStack_nginx_vhost.conf &> /dev/null && mv wpStack_nginx_vhost.conf /etc/nginx/conf.d/default_template.conf
+	wget https://raw.githubusercontent.com/drogomarks/bash_scripts/master/files/wpStack_nginx_vhost_rhel7.conf &> /dev/null && mv wpStack_nginx_vhost_rhel7.conf /etc/nginx/conf.d/default_template.conf
 
 	#Set up domain 
 	if [ $DOMAIN_ANSWER = 'y' ]; then
@@ -377,3 +375,4 @@ if [[ "$DISTRO" == "Debian" ]]; then
 	echo -e "DONE!\n"
 	sleep 1
 fi
+
