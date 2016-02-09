@@ -31,41 +31,30 @@ fi
 
 #script from justcurl.com written by Lindsey Anderson
 
+#RHEL/CentOS
 if [ -f /etc/redhat-release ]; then
 	echo "Redhat based system located"
-	DISTRO="Redhat"
-	if [ -f /etc/httpd/vhost.d/$DOMAIN.conf ]; then
-		echo "Virtual Host already exists" 
-		exit
+	DISTRO="RedHat"
+fi
+
+
+#Debian Based or Ubuntu 14
+if [[ `cat /etc/issue` == *"14"* ]]; then
+	echo "Ubuntu 14 detected"
+	DISTRO="Ubuntu14"
+else
+	if [ -f /etc/debian_version ]; then
+		echo "Debian based System located"
+		DISTRO="Debian"
 	fi
 fi
 
-if [[ `cat /etc/issue | grep 14` == "14" ]]; then
-	echo "Debian based System located"
-	DISTRO="Ubuntu 14"
-	if [ ! -f /etc/apache2/sites-enabled/$DOMAIN.conf ]; then
-		if [ -f /etc/apache2/sites-available/$DOMAIN.conf ]; then
-			echo "Virtual Host already exists"
-		fi	
-	else
-		echo "Virtual Host already exists"
-		exit
-	fi
-fi
 
-if [ -f /etc/debian_version ]; then
-        echo "Debian based System located"
-        DISTRO="Debian"
-        if [ ! -f /etc/apache2/sites-enabled/$DOMAIN ]; then
-                if [ -f /etc/apache2/sites-available/$DOMAIN ]; then
-                        echo "Virtual Host already exists"
-                fi
-        else
-                echo "Virtual Host already exists"
-                exit
-        fi
+#Amazon Linux
+if [[ `cat /etc/issue | grep -i Amazon | awk {'print $1'}` == "Amazon" ]]; then
+	echo "Amazon Linux (RHEL Based) system located"
+	DISTRO="Amazon"
 fi
-
 
 
 DATA="<VirtualHost *:$PORT>
