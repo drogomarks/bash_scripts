@@ -153,6 +153,7 @@ DATA=$DATA"
 #</VirtualHost>"
 
 
+
 if [[ "$DISTRO" == "Redhat" ]]; then
 	# Check for vhost directory in /etc/httpd
 	if [ ! -d /etc/httpd/vhost.d  ]; then
@@ -169,8 +170,7 @@ if [[ "$DISTRO" == "Redhat" ]]; then
 	 
 	
  
-else 
-	if  [[ "$DISTRO" == "Debian" ]]; then
+elif  [[ "$DISTRO" == "Debian" ]]; then
         	if [ -f /etc/apache2/sites-available/$DOMAIN ]; then
                 	echo "This virtual host already exists on this system."
                 	echo "Please remove the virtual host configuration file."
@@ -182,10 +182,9 @@ else
 	
 	ln -s /etc/apache2/sites-available/$DOMAIN /etc/apache2/sites-enabled/domain.com
 
-	fi
+	
 
-else 
-	if [[ "$DISTRO" == "Ubuntu 14" ]]; then
+elif [[ "$DISTRO" == "Ubuntu 14" ]]; then
         	if [ -f /etc/apache2/sites-available/$DOMAIN.conf ]; then
                	 echo "This virtual host already exists on this system."
                	 echo "Please remove the virtual host configuration file."
@@ -196,9 +195,10 @@ else
 
 
         	ln -s /etc/apache2/sites-available/$DOMAIN.conf /etc/apache2/sites-enabled/$DOMAIN.conf
-	fi
+	
 
 fi
+
 
 echo "********************"
 echo ">> Server Name : $DOMAIN"
