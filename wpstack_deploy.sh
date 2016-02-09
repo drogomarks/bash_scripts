@@ -148,7 +148,7 @@ if [[ "$DISTRO" == "RedHat" ]] || [[ "Amazon" ]]; then
 fi
 
 ####################
-    Debian based   #
+#    Debian based   #
 ####################
 
 #Update Packagesa
@@ -202,6 +202,7 @@ if [[ "$DISTRO" == "Debian" ]]; then
 
 	#Make Apache Listen on 8080
 	sed -i 's/80/8080/' /etc/apache2/apache2.conf
+	sed -i 's/80/8080/' /etc/apache2/sites-available/*
 	if [ -f /etc/apache2/ports.conf ]; then 
 		sed -i 's/80/8080/' /etc/apache2/ports.conf
 	fi
@@ -236,8 +237,7 @@ if [[ "$DISTRO" == "Debian" ]]; then
 
 	cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.orig
 
-	wget https://raw.githubusercontent.com/drogomarks/bash_scripts/master/files/default_nginx.conf &> /dev/null && mv default_nginx.conf /etc/nginx/nginx.conf
-
+	wget https://raw.githubusercontent.com/drogomarks/bash_scripts/master/files/default_nginx.conf &> /dev/null && grep user default_nginx.conf | head -1 | sed -i 's/nginx/www-data/' && mv default_nginx.conf /etc/nginx/nginx.conf
 	touch /etc/nginx/conf.d/global.deny
 
 	wget https://raw.githubusercontent.com/drogomarks/bash_scripts/master/files/wpStack_nginx_vhost.conf &> /dev/null && mv wpStack_nginx_vhost.conf /etc/nginx/conf.d/default_template.conf
