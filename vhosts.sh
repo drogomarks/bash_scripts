@@ -184,7 +184,7 @@ elif  [[ "$DISTRO" == "Debian" ]]; then
 
 	
 
-elif [[ "$DISTRO" == "Ubuntu 14" ]]; then
+elif [[ "$DISTRO" == "Ubuntu14" ]]; then
         	if [ -f /etc/apache2/sites-available/$DOMAIN.conf ]; then
                	 echo "This virtual host already exists on this system."
                	 echo "Please remove the virtual host configuration file."
