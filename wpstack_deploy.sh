@@ -26,24 +26,24 @@ if [ $PROCEED_ANSWER == 'n' ]; then
 fi
 
 #Can I haz OS?
-if [[ `cat /etc/redhat-releasae` == *"7"* ]]; then
-	echo "Redhat 7 based system located"
-	DISTRO="RedHat7"
-else
-	echo "Redhat based system located"
-	DISTRO="RedHat"
-fi
-
-if [[ `cat /etc/issue` == *"14"* ]]; then
-	echo "Ubuntu 14 detected"
-	DISTRO="Ubuntu14"
-else
-	if [ -f /etc/debian_version ]; then
-		echo "Debian based System located"
-		DISTRO="Debian"
+#RHEL 7 or 6
+if [ -f /etc/redhat-release ]; then
+	if [[ `cat /etc/redhat-release` == *"7"* ]];then
+		echo "RedHat 7 System detected"
+		DISTRO="RedHat7"
+	else
+		echo "RedHat 6 or earlier detected"
+		DISTRO="RedHat"
 	fi
 fi
 
+#Debian
+if [ -f /etc/debian_version ]; then
+		echo "Debian based System located"
+		DISTRO="Debian"
+fi
+
+#Amazon Linux
 if [[ `cat /etc/issue | grep -i Amazon | awk {'print $1'}` == "Amazon" ]]; then
 	echo "Amazon Linux (RHEL Based) system located"
 	DISTRO="Amazon"
@@ -51,9 +51,9 @@ fi
 
 
 
-##############################################
-##   RHEL/CentOS 6 or Amazon Linux  Based    #
-##############################################
+####################
+##   RHEL/CentOS 7 #
+####################
 
 #Update Packages
 if [ "$DISTRO" == "RedHat7" ]; then
@@ -146,7 +146,8 @@ if [ "$DISTRO" == "RedHat7" ]; then
 	cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.orig
 
 	wget https://raw.githubusercontent.com/drogomarks/bash_scripts/master/files/default_nginx.conf &> /dev/null && mv default_nginx.conf /etc/nginx/nginx.conf
-
+	
+	sed -i '0,/nginx/s//www-data/' /etc/nginx/nginx.conf
 	touch /etc/nginx/conf.d/global.deny
 
 	wget https://raw.githubusercontent.com/drogomarks/bash_scripts/master/files/wpStack_nginx_vhost.conf &> /dev/null && mv wpStack_nginx_vhost.conf /etc/nginx/conf.d/default_template.conf
@@ -357,8 +358,7 @@ if [[ "$DISTRO" == "Debian" ]]; then
 
 	cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.orig
 
-	wget https://raw.githubusercontent.com/drogomarks/bash_scripts/master/files/default_nginx.conf &> /dev/null && grep user default_nginx.conf | head -1 | sed -i 's/nginx/www-data/' && mv default_nginx.conf /etc/nginx/nginx.conf
-	touch /etc/nginx/conf.d/global.deny
+	wget https://raw.githubusercontent.com/drogomarks/bash_scripts/master/files/default_nginx.conf &> /dev/null && mv default_nginx.conf /etc/nginx/nginx.conf && 	touch /etc/nginx/conf.d/global.deny
 
 	wget https://raw.githubusercontent.com/drogomarks/bash_scripts/master/files/wpStack_nginx_vhost.conf &> /dev/null && mv wpStack_nginx_vhost.conf /etc/nginx/conf.d/default_template.conf
 
