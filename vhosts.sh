@@ -168,31 +168,35 @@ if [[ "$DISTRO" == "Redhat" ]]; then
 	mkdir -p $DOCROOT
 	 
 	
-
-elif [[ "$DISTRO" == "Debian" ]]; then
-        if [ -f /etc/apache2/sites-available/$DOMAIN ]; then
-                echo "This virtual host already exists on this system."
-                echo "Please remove the virtual host configuration file."
-                exit 1
-        fi
+ 
+else 
+	if  [[ "$DISTRO" == "Debian" ]]; then
+        	if [ -f /etc/apache2/sites-available/$DOMAIN ]; then
+                	echo "This virtual host already exists on this system."
+                	echo "Please remove the virtual host configuration file."
+                	exit 1
+        	fi
 	echo "$DATA" > /etc/apache2/sites-available/$DOMAIN && 
 	mkdir -p $DOCROOT
 	 
 	
 	ln -s /etc/apache2/sites-available/$DOMAIN /etc/apache2/sites-enabled/domain.com
 
-elif [[ "$DISTRO" == "Ubuntu 14" ]]; then
-        if [ -f /etc/apache2/sites-available/$DOMAIN.conf ]; then
-                echo "This virtual host already exists on this system."
-                echo "Please remove the virtual host configuration file."
-                exit 1
-        fi
-        echo "$DATA" > /etc/apache2/sites-available/$DOMAIN.conf &&
-        mkdir -p $DOCROOT
+	fi
+
+else 
+	if [[ "$DISTRO" == "Ubuntu 14" ]]; then
+        	if [ -f /etc/apache2/sites-available/$DOMAIN.conf ]; then
+               	 echo "This virtual host already exists on this system."
+               	 echo "Please remove the virtual host configuration file."
+               	 exit 1
+        	fi
+        	echo "$DATA" > /etc/apache2/sites-available/$DOMAIN.conf &&
+        	mkdir -p $DOCROOT
 
 
-        ln -s /etc/apache2/sites-available/$DOMAIN.conf /etc/apache2/sites-enabled/$DOMAIN.conf
-fi
+        	ln -s /etc/apache2/sites-available/$DOMAIN.conf /etc/apache2/sites-enabled/$DOMAIN.conf
+	fi
 
 fi
 
