@@ -360,7 +360,12 @@ if [[ "$DISTRO" == "Debian" ]]; then
 
 	wget https://raw.githubusercontent.com/drogomarks/bash_scripts/master/files/default_nginx.conf &> /dev/null && mv default_nginx.conf /etc/nginx/nginx.conf && 	touch /etc/nginx/conf.d/global.deny
 
+	sed -i '0,/nginx/s//www-data/' /etc/nginx/nginx.conf
+	
+
 	wget https://raw.githubusercontent.com/drogomarks/bash_scripts/master/files/wpStack_nginx_vhost.conf &> /dev/null && mv wpStack_nginx_vhost.conf /etc/nginx/conf.d/default_template.conf
+
+
 
 	#Set up domain 
 	if [ $DOMAIN_ANSWER = 'y' ]; then
