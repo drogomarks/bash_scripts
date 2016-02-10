@@ -1,4 +1,8 @@
 vcl 4.0;
+
+#-- NOTE: This is the same one used for Varnish 3. Template from Rackspace, I simply updated it to work with Varnish 4. 
+
+
 #-- https://www.varnish-cache.org/docs/3.0/tutorial/backend_servers.html
 #-- Set the local servers loopback ip and to the port running Apache, Nginx,
 #   Tomcat, etc (locally)
