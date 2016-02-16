@@ -34,7 +34,7 @@ fi
 #RHEL/CentOS
 if [ -f /etc/redhat-release ]; then
 	echo "Redhat based system located"
-	DISTRO="RedHat"
+	DISTRO="Redhat"
 fi
 
 
@@ -53,7 +53,7 @@ fi
 #Amazon Linux
 if [[ `cat /etc/issue | grep -i Amazon | awk {'print $1'}` == "Amazon" ]]; then
 	echo "Amazon Linux (RHEL Based) system located"
-	DISTRO="Amazon"
+	DISTRO="Redhat"
 fi
 
 
