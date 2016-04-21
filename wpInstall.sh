@@ -47,7 +47,7 @@ echo -e "Done!"
 
 #Set up DB?
 
-echo - e "Would you like to set up a database for this installation (on this server/localhost)?"
+echo -e "Would you like to set up a database for this installation (on this server/localhost)?"
 read DB_ANSWER
 
 if [ $DB_ANSWER == "no" ] || [ $DB_ANSWER == "No" ] || [ $ANSWER == "NO" ]; then
@@ -62,10 +62,19 @@ echo -e "What user name would you like for your database $DB_NAME?"
 read DB_USR
 
 echo -e "Password for this $DB_USR:"
-read $DB_USR_PASS
+read DB_USR_PASS
+
+mysql -e "create database $DB_NAME"
+
+mysql -e "grant all privileges on $DB_NAME.* to $DB_USR@'localhost' identified by '"$DB_USR_PASS"';"
 
 
-mysql -e "grant all privileges on $DB_NAME.* to $DB_USR identified by '$DB_USR_PASS'";"
+fi
 
 
 
+#Plugin new DB info to wp-config.php
+
+sed -i "s/database_name_here/$DB_NAME/g" $WP_DIR/wp-config.php
+sed -i "s/username_here/$DB_USR/g" $WP_DIR/wp-config.php
+sed -i "s/password_here/$DB_USR_PASS/g" $WP_DIR/wp-config.php
