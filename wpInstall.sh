@@ -1,4 +1,9 @@
 #!/bin/bash
+##################
+# Hot and Diry bash script to install LAMP and set up WordPress on an instance.
+# ***NOTE*** LAMP Install portion DOES NOT work on RHEL 7. #
+
+
 echo -e "Do you need to install LAMP on this server?(y/n)" 
 read LAMP_ANSWER
 
@@ -12,6 +17,7 @@ if [ -f /etc/redhat-release ]; then
 		echo -e "RedHat 7 is currently not supported...but I'm working on it!"
 		echo -e "kthxbai!\n"
 		DISTRO="RedHat7"
+		exit
 	else
 		echo "RedHat 6 or earlier detected"
 		DISTRO="RedHat"
