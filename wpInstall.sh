@@ -1,10 +1,8 @@
 #!/bin/bash
-echo -e "Do you need to install LAMP on this server?" 
+echo -e "Do you need to install LAMP on this server?(y/n)" 
 read LAMP_ANSWER
 
 if [ $LAMP_ANSWER == 'y' ];then
-
-#!/bin/bash
 
 #Can I haz OS?
 #RHEL 7 or 6
@@ -54,8 +52,7 @@ if [ "$DISTRO" == "RedHat" ] || [ "$DISTRO" == "Amazon" ]; then
         	echo "Installing MySQL Server..."
         	sleep .5
         	yum install mysql-server
-
-
+		service mysqld start
 	fi
 
 
@@ -116,8 +113,7 @@ if [[ "$DISTRO" == "Debian" ]]; then
         	echo "Installing MySQL Server..."
         	sleep .5
         	apt-get install mysql-server
-
-
+		service mysql start
 	fi
 
 
@@ -164,6 +160,9 @@ fi
 
 else 
 
+    echo -e "Okay moving on..."
+
+fi
 
 echo -e "What directory are you installing Wordpress to? (FULL path)\n"
 read WP_DIR
@@ -220,19 +219,18 @@ if [ $DB_ANSWER == "no" ] || [ $DB_ANSWER == "No" ] || [ $ANSWER == "NO" ]; then
 	exit
 else 
 
-echo -e "What database name would you like?" 
-read DB_NAME
+	echo -e "What database name would you like?" 
+	read DB_NAME
 
-echo -e "What user name would you like for your database $DB_NAME?"
-read DB_USR
+	echo -e "What user name would you like for your database $DB_NAME?"
+	read DB_USR
 
-echo -e "Password for this $DB_USR:"
-read DB_USR_PASS
+	echo -e "Password for $DB_USR?"
+	read DB_USR_PASS
 
-mysql -e "create database $DB_NAME"
+	mysql -e "create database $DB_NAME"
 
-mysql -e "grant all privileges on $DB_NAME.* to $DB_USR@'localhost' identified by '"$DB_USR_PASS"';"
-
+	mysql -e "grant all privileges on $DB_NAME.* to $DB_USR@'localhost' identified by '"$DB_USR_PASS"';"
 
 fi
 
@@ -243,3 +241,6 @@ fi
 sed -i "s/database_name_here/$DB_NAME/g" $WP_DIR/wp-config.php
 sed -i "s/username_here/$DB_USR/g" $WP_DIR/wp-config.php
 sed -i "s/password_here/$DB_USR_PASS/g" $WP_DIR/wp-config.php
+
+
+echo -e "All Done! Go to your IP or Domain to continue Wordpress set up."
