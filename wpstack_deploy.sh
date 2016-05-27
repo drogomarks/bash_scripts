@@ -224,13 +224,6 @@ if [ "$DISTRO" == "RedHat" ] || [ "$DISTRO" == "Amazon" ]; then
 	if [ $DOMAIN_ANSWER = 'y' ]; then
 		echo -e "Setting up your domain $DOMAIN in Apache...\n"
 		wget https://raw.githubusercontent.com/drogomarks/bash_scripts/master/vhosts.sh &> /dev/null && bash vhosts.sh -d $DOMAIN -p 8080
-		echo "\n Your new Virtual Host infomration:\n"
-		sleep 1
-		echo "********************"
-		echo ">> Server Name : $DOMAIN"
-		echo ">> Server Alias: www.$DOMAIN"
-		echo ">> Document Root: /var/www/vhosts/$DOMAIN/"
-		echo "********************"
 		sleep 1
 	fi 
 
@@ -341,12 +334,6 @@ if [[ "$DISTRO" == "Debian" ]]; then
 		echo -e "Setting up your domain $DOMAIN in Apache...\n"
 		wget https://raw.githubusercontent.com/drogomarks/bash_scripts/master/vhosts.sh &> /dev/null && bash vhosts.sh -d $DOMAIN -p 8080
 		echo "\n Your new Virtual Host infomration:\n"
-                sleep 1
-                echo "********************"
-                echo ">> Server Name : $DOMAIN"
-                echo ">> Server Alias: www.$DOMAIN"
-                echo ">> Document Root: /var/www/vhosts/$DOMAIN/"
-                echo "********************"
 		sleep 1
 	fi 
 
