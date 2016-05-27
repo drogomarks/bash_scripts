@@ -333,7 +333,6 @@ if [[ "$DISTRO" == "Debian" ]]; then
 	if [ $DOMAIN_ANSWER = 'y' ]; then
 		echo -e "Setting up your domain $DOMAIN in Apache...\n"
 		wget https://raw.githubusercontent.com/drogomarks/bash_scripts/master/vhosts.sh &> /dev/null && bash vhosts.sh -d $DOMAIN -p 8080
-		echo "\n Your new Virtual Host infomration:\n"
 		sleep 1
 	fi 
 
