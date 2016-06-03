@@ -49,7 +49,7 @@ fi
 
 
 if [ -z $LINE_TO_PARSE ];then
-    LINES_TO_PARSE=1000
+    LINES_TO_PARSE=2000
 elif [ -z $MAX_IPS ];then
     MAX_IPS=15
 fi
