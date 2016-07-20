@@ -10,7 +10,7 @@ fi
 
 if [ `cat /etc/issue | grep -i Amazon | awk {'print $1'}` == "Amazon" ]; then
         echo "Amazon Linux (RHEL Based) system located"
-        DISTRO="Redhat"
+        DISTRO="RedHat"
 fi
 
 
