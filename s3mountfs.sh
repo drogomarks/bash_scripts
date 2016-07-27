@@ -1,6 +1,11 @@
 #!/bin/bash
 # Determine the OS
 
+if [ "$(id -u)" != "0" ]; then
+   echo "This script must be run as root" 1>&2
+   exit 1
+fi
+
 if [ -f /etc/redhat-release ]; then
         echo "Red Hat based sytem detected."
         DISTRO="RedHat"
