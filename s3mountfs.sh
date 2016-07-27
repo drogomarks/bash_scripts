@@ -2,7 +2,7 @@
 # Determine the OS
 
 if [ -f /etc/redhat-release ]; then
-        ech1`o "Red Hat based sytem detected."
+        echo "Red Hat based sytem detected."
         DISTRO="RedHat"
 fi
 
