@@ -32,14 +32,14 @@ fi
 # RHEL/CentOS/Amazon
 if [ $DISTRO == "RedHat" ]; then
 	echo -e "RHEL based OS detected."
-	yum install gcc libstdc++-devel gcc-c++ curl-devel libxml2-devel openssl-devel mailcap fuse-libs
+	yum -y install gcc libstdc++-devel gcc-c++ curl-devel libxml2-devel openssl-devel mailcap fuse-libs
 
 fi
 
 # Debian/Ubuntu
 if [ $DISTRO = "Debian" ]; then
 	echo -e "Debian based OS detected."
-	apt-get install build-essential libcurl4-openssl-dev libxml2-dev mime-support fuse-libs
+	apt-get -y install build-essential libcurl4-openssl-dev libxml2-dev mime-support fuse-libs
 
 fi
 
