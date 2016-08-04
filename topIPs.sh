@@ -116,7 +116,7 @@ TOP_IPS=$(tail -n $LINES_TO_PARSE $LOG_FILE | cut -f 1 -d ' '| sort | uniq -c| s
 for ip in $TOP_IPS;do
      echo -e "$ip"
      echo -e "------------"
-     whois $ip | grep -i "OrgName\|descr\|City\|State\|Country"
+     whois $ip | grep -i "OrgName\|descr\|City\|State\|Country\|Amazon"
      echo -e "------------\n"
      sleep 1
 done
