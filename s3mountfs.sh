@@ -57,7 +57,7 @@ modprobe fuse
 
 
 #Download and install S3FS
-wget https://s3fs.googlecode.com/files/s3fs-1.74.tar.gz 
+wget https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/s3fs/s3fs-1.74.tar.gz 
 mv s3fs-1.74.tar.gz /usr/src/
 tar xvf /usr/src/s3fs-1.74.tar.gz -C /usr/src/
 
