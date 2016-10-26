@@ -5,8 +5,8 @@ require 'vendor/autoload.php';
 use Aws\Ec2\Ec2Client;
 
 $ec2Client = Ec2Client::factory(array(
-    'key'    => 'AKIAI5P34RQZWVFANBBQ',
-    'secret' => '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',
+    'key'    => '',
+    'secret' => '',
     'region' => 'us-west-2'
 ));
 
