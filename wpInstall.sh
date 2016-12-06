@@ -217,10 +217,10 @@ echo -e "Done!"
 
 #Set up DB?
 
-echo -e "Would you like to set up a database for this installation (on this server/localhost)?"
+echo -e "Would you like to set up a database for this installation (on this server i.e. localhost) y/n"
 read DB_ANSWER
 
-if [ $DB_ANSWER == "no" ] || [ $DB_ANSWER == "No" ] || [ $ANSWER == "NO" ]; then
+if [ $DB_ANSWER == "n" ] || [ $DB_ANSWER == "N" ] || [ $DB_ANSWER == "no" ] || [ $DB_ANSWER == "No" ] || [ $ANSWER == "NO" ]; then
 	echo "Exiting..."
 	exit
 else 
