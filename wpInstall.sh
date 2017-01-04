@@ -177,7 +177,7 @@ echo $WP_DIR
 
 
 if [ ! -d "$WP_DIR" ]; then
-        echo -e "$PWD does not exsist, would like to create it now? (yes/no)"
+        echo -e "$WP_DIR does not exsist, would like to create it now? (yes/no)"
         read ANSWER
         if [ $ANSWER == "no" ] || [ $ANSWER == "No" ] || [ $ANSWER == "NO" ]; then
                 echo -e "Exiting..."
