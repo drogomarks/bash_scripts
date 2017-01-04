@@ -66,9 +66,9 @@ if [ "$DISTRO" == "RedHat" ] || [ "$DISTRO" == "Amazon" ]; then
         echo -e "Would you like to configure a domain already? (y/n)"
         read DOMAIN_ANSWER
 
-        if [ $DOMAIN_ANSWER == "n" ]; then
+        if [[ $DOMAIN_ANSWER == "n" ]]; then
                 echo -e "Ok. Moving on."
-                else
+           else
                 echo -e "Domain name?:"
                 read DOMAIN
         fi
@@ -84,7 +84,7 @@ if [ "$DISTRO" == "RedHat" ] || [ "$DISTRO" == "Amazon" ]; then
 
 
         #Set up domain
-        if [ $DOMAIN_ANSWER = 'y' ]; then
+        if [[ $DOMAIN_ANSWER = 'y' ]]; then
                 echo -e "Setting up your domain $DOMAIN in Apache...\n"
                 wget https://raw.githubusercontent.com/drogomarks/bash_scripts/master/vhosts.sh &> /dev/null && bash vhosts.sh -d $DOMAIN
         fi
@@ -233,7 +233,7 @@ fi
 echo -e "Would you like to set up a database for this installation (on this server i.e. localhost) y/n"
 read DB_ANSWER
 
-if [ $DB_ANSWER == "n" ] || [ $DB_ANSWER == "N" ] || [ $DB_ANSWER == "no" ] || [ $DB_ANSWER == "No" ] || [ $ANSWER == "NO" ]; then
+if [[ $DB_ANSWER == "n" ]] || [[ $DB_ANSWER == "N" ]] || [[ $DB_ANSWER == "no" ]] || [[ $DB_ANSWER == "No" ]] || [[ $ANSWER == "NO" ]]; then
         echo "Exiting..."
         exit
 else
