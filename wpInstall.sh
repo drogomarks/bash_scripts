@@ -222,9 +222,9 @@ echo -e "Setting permissions.."
 find $WP_DIR -type d -exec chmod 2775 {} \;
 find $WP_DIR -type f -exec chmod 2664 {} \;
 
-if [ $DISTRO == "RedHat" ] || [ $DISTRO == "Amazon" ];then
+if [[ $DISTRO == "RedHat" ]] || [[ $DISTRO == "Amazon" ]];then
         chown apache $WP_DIR -R
-elif [ $DISTRO == "Debian" ]; then
+elif [[ $DISTRO == "Debian" ]]; then
         chown www-data $WP_DIR -R
 fi
 
