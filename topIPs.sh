@@ -39,8 +39,18 @@ while [[ $# > 0 ]];do
                                       Default value is set to 1000 if none is set.\n"
         echo -e "-m\t --max-ips\t\t  The max amount of 'top' IPs you'd like to gather from the log file.
                                       Default value is 10 if no value set."
+	exit 0
         ;;
         *)
+	echo -e "ERROR: No arguments given. -f or --file [LOG FILE] REQUIRED.\n"
+    	echo -e "Usage: ./topIPs.sh -f [LOG FILE] -l [# of Lines to Parse] -m [Max Amount of Top IPs to Show]\n"
+    	echo -e "-f\t --file\t\t\t  The log file to parse/examin.\n"
+    	echo -e "-l\t --lines-to-parse\t  The amount of lines you'd like to examine from the log file.
+                                  Default value is set to 1000 if none is set.\n"
+    	echo -e "-m\t --max-ips\t\t  The max amount of 'top' IPs you'd like to gather from the log file.
+                                  Default value is 10 if no value set."
+
+    	exit 0
         ;;
     esac
     shift 
