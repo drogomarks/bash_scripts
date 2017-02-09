@@ -2,8 +2,8 @@
 # Simple scrpt to look at 2000 lines of an Apache access log file and find the top 15 most occurning addresses and do a whois look up on them. 
 # Script does not make any modifications to files, but does not gaurentee anything. use at your own risk. 
 
-#Make sure some args are being passed
-if [[ $# == 0 ]];then
+#Set Function for 'help' text
+function help {
     echo -e "ERROR: No arguments given. -f or --file [LOG FILE] REQUIRED.\n"
     echo -e "Usage: ./topIPs.sh -f [LOG FILE] -l [# of Lines to Parse] -m [Max Amount of Top IPs to Show]\n"
     echo -e "-f\t --file\t\t\t  The log file to parse/examin.\n"
@@ -13,7 +13,11 @@ if [[ $# == 0 ]];then
                                   Default value is 10 if no value set."
 
     exit 0
+}
 
+#Make sure some args are being passed
+if [[ $# == 0 ]];then
+	help
 else
 
 # Store key/value pairs of args
@@ -34,23 +38,10 @@ while [[ $# > 0 ]];do
         shift
         ;;
         -h|--help)
-        echo -e "Usage: ./topIPs.sh [OPTIONS]... [LOG FILE]...\n"
-        echo -e "-l\t --lines-to-parse\t  The amount of lines you'd like to examine from the log file.
-                                      Default value is set to 1000 if none is set.\n"
-        echo -e "-m\t --max-ips\t\t  The max amount of 'top' IPs you'd like to gather from the log file.
-                                      Default value is 10 if no value set."
-	exit 0
+	help
         ;;
         *)
-	echo -e "ERROR: No arguments given. -f or --file [LOG FILE] REQUIRED.\n"
-    	echo -e "Usage: ./topIPs.sh -f [LOG FILE] -l [# of Lines to Parse] -m [Max Amount of Top IPs to Show]\n"
-    	echo -e "-f\t --file\t\t\t  The log file to parse/examin.\n"
-    	echo -e "-l\t --lines-to-parse\t  The amount of lines you'd like to examine from the log file.
-                                  Default value is set to 1000 if none is set.\n"
-    	echo -e "-m\t --max-ips\t\t  The max amount of 'top' IPs you'd like to gather from the log file.
-                                  Default value is 10 if no value set."
-
-    	exit 0
+	help
         ;;
     esac
     shift 
